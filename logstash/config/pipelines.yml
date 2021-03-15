@@ -1,0 +1,19 @@
+  - pipeline.id: beats
+    config.string: |
+      input { 
+        redis {
+          host => "redis"
+          port => 6379
+          key => "input_key"
+          data_type => "list"
+          codec => json
+        }
+      }
+      output {
+          if [log_type] =~ "apache" {
+            pipeline { send_to => apache_address }
+          }
+      }
+
+  - pipeline.id: apache
+    path.config: "/usr/share/logstash/pipeline/apache.conf"

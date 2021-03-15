@@ -1,0 +1,13 @@
+filebeat.inputs:
+  - type: log
+    paths: 
+      - /logs/apache.log
+    fields_under_root: true
+    fields:
+      log_type: 'apache'
+
+output.redis:
+  hosts: [ "redis:6379" ]
+  key: "input_key"
+  data_type: "list"
+  codec: [ json ]
